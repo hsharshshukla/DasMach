@@ -1,0 +1,8 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+public class example {
+public static void main(String args[]) throws IOException{
+	Document d = Jsoup.connect("https://www.wikihow.com/wikiHowTo?search=Signal+wifi").timeout(6000).get();
+}
+}

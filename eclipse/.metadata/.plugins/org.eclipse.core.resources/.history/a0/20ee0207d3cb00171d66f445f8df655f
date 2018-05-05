@@ -1,0 +1,13 @@
+import java.util.Scanner;
+public class MinimumHTriangle {
+	public static void main(String args[]){
+	System.out.println("Please enter Height and Minimum Area of Desired Trianges in same order respectively -Heigth and Area :");
+	Scanner input = new Scanner(System.in);
+	int h = input.nextInt();
+	int area = input.nextInt();
+//Check for heigth and Area
+	if( 1 <= h && h <= 1000000 ) {} else if(){}
+	
+	
+	}
+}

@@ -1,0 +1,7 @@
+
+public class ReadFile {
+ private static final String Filename="/development/develop/test.txt";
+ public static void main(String args[]){
+	 try(BufferReader br = new BufferReader(Filename)){} catch(IOException e){}
+ }
+}

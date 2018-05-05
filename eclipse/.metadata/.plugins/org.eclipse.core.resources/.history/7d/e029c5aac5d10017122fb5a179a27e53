@@ -1,0 +1,17 @@
+package hackerRank;
+import java.util.Scanner;
+import java.io.BufferedInputStream;
+
+public class LeftRotation {
+	public static void main(String args[]){
+	Scanner input = new Scanner(new BufferedInputStream(System.in));
+	//Check for number of integers and number of rotations
+	if (n >= 1 & n =< 100000){
+		if(){
+			
+		}
+			else{}
+		}else{}
+	
+	}
+}

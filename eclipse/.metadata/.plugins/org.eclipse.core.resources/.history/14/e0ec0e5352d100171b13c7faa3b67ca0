@@ -1,0 +1,10 @@
+import java.util.*;
+
+class Example{
+	public static void main(String args[]){
+		//Creating empty Priority Queue
+	//	PriorityQueue<String> pQueue = new PriorityQueue<String>;
+
+	}
+	
+}

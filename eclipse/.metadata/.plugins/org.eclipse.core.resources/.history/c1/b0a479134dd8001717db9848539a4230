@@ -1,0 +1,16 @@
+package hackerRank;
+import java.util.Scanner;
+public class oddgroup {
+	public static void main(String args[]){
+		Scanner stdin = new Scanner(System.in);
+		int n = stdin.nextInt(); //4
+		int sum = (n*(n-1))/2; //6
+		sum++; //7
+		int a = (2*sum)-1; //13
+		
+		for (int i=1;i<n;i++){
+			a = a  +2;
+		}
+	}
+
+}

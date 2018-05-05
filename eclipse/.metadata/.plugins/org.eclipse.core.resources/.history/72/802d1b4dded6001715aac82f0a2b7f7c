@@ -1,0 +1,35 @@
+package dec_package;
+import java.util.Scanner;
+
+public class football {
+public static void main(String args[]){
+	int a=0,b=0;
+	int [] ag= new int[10];
+	int [] bg= new int[10];
+	Scanner in = new Scanner(System.in);
+	String inputline = "";
+	while(in.hasNext()){
+		int ai =0,bi=0;
+//Getting Input Stream 
+		 inputline = in.next();
+		for (int i=0;i<10;i++){
+			
+			if(i%2 ==0){
+//Goals for Team B
+			ag[ai]= inputline.charAt(i);
+				if(ag[ai] == "1"){
+					a++;
+				}
+			}else{
+//Goals for Team A
+				ag[bi]= inputline.intAt(i);
+			}
+		}
+
+//Calculate Advantage i.e. 5-0 or 0-5
+		
+// Calculate Sudden Death		
+	}
+	
+}
+}

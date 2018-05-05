@@ -1,0 +1,28 @@
+Setting up Virtual System 
+install Virtual box  - gui + kde + basic development 
+yum install kernel-devel 
+yum update 
+Add virtualboxaddition.iso
+Add shared folder 
+
+Basic Programs 
+  Opera browser or any software for VPN 
+  open Office 
+  setup Git Repository ->
+       https://stackoverflow.com/questions/25503017/why-does-git-tell-me-no-such-remote-origin-when-i-try-to-push-to-origin 
+       https://www.digitalocean.com/community/tutorials/how-to-set-up-a-private-git-server-on-a-vps
+  
+Java Setup 
+  download eclipse 
+  make workspace  
+  add git repo in workspace to upload it to github repo
+
+Dasmach Django setup 
+  install python 
+  install django and other related repos
+  install pycharm 
+  install sublime  
+download
+  
+  
+  

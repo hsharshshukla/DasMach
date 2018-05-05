@@ -1,0 +1,8 @@
+package codechef;
+
+import java.util.Scanner;
+public class operator {
+	Scanner in = new Scanner(System.in);
+	int n = in.nextInt(),a=0,b=0;
+	char r =' ';
+}

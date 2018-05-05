@@ -1,0 +1,19 @@
+package dec_package;
+import java.util.Scanner;
+
+public class football {
+public static void main(String args[]){
+	int [] a = new int[10];
+	int [] b = new int[10];
+	int kick_index = 0,kick_count=0;
+	
+	Scanner in = new Scanner(System.in);
+	
+	while(in.hasNext()){
+		for (int i=0;i<20;i++){
+			if(){}else{}
+		}
+	}
+	
+}
+}

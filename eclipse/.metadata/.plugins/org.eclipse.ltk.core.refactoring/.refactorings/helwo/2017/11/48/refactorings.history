@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;manifest&apos; to &apos;helwo.helwo.java&apos;&#x0A;- Original project: &apos;helwo&apos;&#x0A;- Destination element: &apos;helwo.helwo.java&apos;&#x0A;- Original element: &apos;manifest&apos;&#x0A;- Update references to refactored element" description="Move file" destination="/src&lt;helwo{helwo.java" element1="manifest" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1512075413766" units="0" version="1.0"/>
+</session>

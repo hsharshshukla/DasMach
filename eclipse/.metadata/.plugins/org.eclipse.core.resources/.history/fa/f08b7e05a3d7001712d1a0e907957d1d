@@ -1,0 +1,36 @@
+package dec_package;
+import java.util.Scanner;
+public class xor_chef {
+
+	public static void main(String args[]){
+		Scanner stdin = new Scanner(System.in);
+		int l = stdin.nextInt();
+		int q = stdin.nextInt();
+		int [] arr = new int[l];
+		int [] ms = new int[l]
+		//Check for l 
+		
+		for (int i=0;i<l;){ //Preparing Array
+			arr [i] = stdin.nextInt();
+			if(i>0){
+				ms[i]=arr[i];
+			}
+		}
+		 
+		for (int j=0;j<q;j++){ //Each Test cases
+		  int op = stdin.nextInt(); //Operation type	
+			if(op==1){
+				int ind=stdin.nextInt(); 
+				arr[ind] = stdin.nextInt(); 
+			} else if(op==2){
+				int msind=stdin.nextInt();
+				for (int k=0;k<msind;k++){
+					
+				}
+			}
+			
+		}
+		
+		stdin.close();
+	}
+}

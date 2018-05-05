@@ -1,0 +1,8 @@
+package hackerRank;
+import java.util.Scanner;
+import java.io.BufferedInputStream;
+
+public class LeftRotation {
+	Scanner input = new Scanner(new BufferedInputStream(System.in));
+
+}

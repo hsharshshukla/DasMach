@@ -1,0 +1,8 @@
+package hackerRank;
+
+public class oddgroup {
+	public static void main(String args[]){
+		
+	}
+
+}

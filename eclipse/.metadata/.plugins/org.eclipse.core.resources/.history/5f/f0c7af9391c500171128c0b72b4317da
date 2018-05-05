@@ -1,0 +1,28 @@
+import java.util.HashMap;
+
+public class LRUCache {	
+		int capacity;
+		HashMap<Integer,Node> map = new HashMap<Integer,Node> ();
+		Node head=null;
+		Node end=null;
+		public LRUCache(int capacity){
+			this.capacity = capacity;
+		}
+		
+		public int get(int key){
+			if (map.containsKey(key)){
+				Node n =map.get(key);
+				remove(n);
+				setHead(n);
+				return n.value;				
+			}
+			return -1;
+		}
+		public void remove(Node n){
+			if (n.pre!=n.null){
+				n.pre.next=n.next;
+			}else{
+				head = n.next;
+			}
+		}
+}

@@ -1,0 +1,7 @@
+package dec_package;
+
+public class football {
+public static void main(String args[]){
+	
+}
+}

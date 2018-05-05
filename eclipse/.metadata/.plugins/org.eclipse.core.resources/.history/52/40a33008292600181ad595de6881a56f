@@ -1,0 +1,59 @@
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.util.*;
+import java.io.*;
+//laber (col,row,content)
+
+public class Zigwheels {
+public static void main(String args[]) throws Exception{
+	String website = "https://www.cartrade.com/";	
+	File f = new File("/development/test1.xls");
+	WritableWorkbook testfile = Workbook.createWorkbook(f);
+	WritableSheet sheet = testfile.createSheet("Car Models",0);
+	File file =
+	new File("/development/PycharmProjects/Dasmach/data/brands.txt");
+	Scanner sc = new Scanner(file);
+	Document d,vd = null;
+	
+	while (sc.hasNextLine()){
+	  String brand =sc.nextLine();
+	  String url = website  + brand + "-cars";		
+	   d = Jsoup.connect(url).timeout(6000).get();
+	   Elements ele = d.select("div#find_tab1");
+	   for (Element element : ele.select("div.content")){
+		   String car_name = element.select("a").attr("title");
+		   String feature  = element.select("p").text();		   
+		   car_name = car_name.substring(car_name.indexOf(brand) + brand.length()+ 2,car_name.length() );
+		   System.out.println(car_name);
+		   String[] car = car_name.split("");
+		   for(int i=0; i <car.length; i++){
+			   if(i==0) {
+				   car [0] = car[0].toLowerCase(); }
+			   else {
+				   car[0] = car[i-1] + '-' + car[i].toLowerCase();
+			   }			   
+		   }
+		   /*url = url + '/' + car[0];
+		   vd = Jsoup.connect(url).timeout(6000).get();
+		   Elements ele_vd = d.select("div#Variants");
+		   for (Element element_vd : ele_vd.select("div.content")){
+			   String var_name = element.select("a").attr("title");
+			   */
+		   
+		// List up Models	        
+	        Label c1 = new Label(0, 0, brand);
+	    	Label c2 = new Label(1,0,car_name)
+	        sheet.addCell(l); 
+	        }   
+	    }	
+		testfile.write();    
+	    testfile.close(); 
+	}		
+}

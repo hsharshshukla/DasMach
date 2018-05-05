@@ -1,0 +1,23 @@
+import java.util.Scanner;
+public class MinimumHTriangle {
+	public static void main(String args[]){
+		System.out.println("This program calculates Minimum height for a triangle");	
+	System.out.println("Please enter Base and Minimum Area of Desired Trianges in same order respectively -Heigth and Area :");
+	Scanner input = new Scanner(System.in);
+	int b = input.nextInt();
+	int a = input.nextInt();
+	int h=0;
+//Check for height and Area
+	if( 1 <= b && b <= 1000000 ) {} else { System.out.println("The Base shoud be in the range: 1<=h<=1000000");}
+	if( 1 <= a && a <= 1000000 ) {} else { System.out.println("The Area shoud be in the range: 1<=a<=1000000");}
+	
+	//Calculate height
+	h = (2 * a)/b;
+	if (h == (int)h){
+		
+	}
+	else
+	{}
+	
+	}
+}

@@ -1,0 +1,611 @@
+/*
+ * Decompiled with CFR 0_123.
+ * 
+ * Could not load the following classes:
+ *  ixos.base.PwdCrypt
+ *  ixos.base.log4j.Log
+ *  ixos.base.log4j.Log$Context
+ */
+package ixos.xsadmx;
+
+import ixos.base.PwdCrypt;
+import ixos.base.log4j.Log;
+import ixos.xsadmx.Admx;
+import ixos.xsadmx.AdmxException;
+import ixos.xsadmx.AdmxHTTPResult;
+import ixos.xsadmx.AdmxRpcException;
+import ixos.xshttp.HTTPResponse;
+import ixos.xshttp.HttpClient;
+import ixos.xshttp.NVPair;
+import ixos.xshttp.Proxy;
+import ixos.xsrpc.BlockingCallback;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.util.ArrayList;
+
+public class AdmxHttp {
+    private static final transient Log.Context LC = new Log.Context(AdmxHttp.class.getName());
+    public static final int DEFAULT_ADMS_PORT = 4034;
+    public static final int DEFAULT_ADMS_WEB_PORT = 4060;
+    public static final int DEFAULT_ADMS_WEB_SSL_PORT = 4061;
+    public static final String OPEN = "/archive/admin/open";
+    public static final String EXEC = "/archive/admin/exec";
+    public static final String CLOSE = "/archive/admin/close";
+    public static final String ASCONF = "/archive/asconf";
+    public static final String STATUS = "/archive/admin/status";
+    public static final String ATT_CONFIGNAME = "configName";
+    public static final String EXCEPTION_UNKNOWN_HOST_STR = "An UnknownHostException occurred.";
+    public static final String EXCEPTION_TOMCAT_UNAVAILABLE_STR = "The servlet is not available.";
+    public static final String EXCEPTION_APACHE_UNAVAILABLE_STR = "The servlet is not available.";
+    public static final String EXCEPTION_ADMS_UNAVAILABLE_STR = "The ADMS servlet is not available.";
+    public static final String ENC_BLOWFISH = "Blowfish";
+    public final String USER_HOME = "user.home";
+    public static final String PERSISTENCE_BOTH = "both";
+    public static final String PERSISTENCE_PERSISTENT = "persistent";
+    public static final String PERSISTENCE_TRANSIENT = "transient";
+    public static final String NETWORK_ERROR_DISCONNECT = "Network communication with server failed. Do you want to disconnect?";
+    public static boolean DEBUG = false;
+    static int _timeout = 1000;
+    int _procMethod = 1;
+    Proxy _proxy;
+    int _protocol;
+    private NVPair _hostname;
+    private NVPair _sid;
+    private NVPair _port;
+    private boolean _loggedOn;
+    HttpClient _cl;
+    private boolean isDMS = false;
+    private boolean _filter = true;
+
+    public AdmxHttp(int n, String string, int n2) throws AdmxRpcException {
+        this(n, string, n2, null);
+    }
+
+    public AdmxHttp(String string, int n, String string2, int n2) throws AdmxRpcException {
+        this(string, n, string2, n2, null);
+    }
+
+    public AdmxHttp(int n, String string, int n2, Proxy proxy) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("AdmxHttp");
+        }
+        this._protocol = n;
+        this.connect(string, -1, string, n2, proxy);
+        if (LC.leaveOn()) {
+            LC.leave("AdmxHttp");
+        }
+    }
+
+    public AdmxHttp(String string, int n, String string2, int n2, Proxy proxy) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("AdmxHttp");
+        }
+        this._protocol = n;
+        this.isDMS = true;
+        this._loggedOn = true;
+        this.connect(string, string2, -1, string2, n2, proxy);
+        if (LC.leaveOn()) {
+            LC.leave("AdmxHttp");
+        }
+    }
+
+    public AdmxHttp(int n, String string, String string2, int n2, String string3, int n3, Proxy proxy) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("AdmxHttp");
+        }
+        this._protocol = n;
+        if (string.toLowerCase().startsWith("get")) {
+            this._procMethod = 0;
+        }
+        this.connect(string2, n2, string3, n3, proxy);
+        if (LC.leaveOn()) {
+            LC.leave("AdmxHttp");
+        }
+    }
+
+    public AdmxHttp(String string, int n, String string2, String string3, int n2, String string4, int n3, Proxy proxy) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("AdmxHttp");
+        }
+        this._protocol = n;
+        if (string2.toLowerCase().startsWith("get")) {
+            this._procMethod = 0;
+        }
+        this.isDMS = true;
+        this.connect(string, string3, n2, string4, n3, proxy);
+        if (LC.leaveOn()) {
+            LC.leave("AdmxHttp");
+        }
+    }
+
+    public AdmxHttp(int n, String string, String string2, int n2, String string3, int n3) throws AdmxRpcException {
+        this(n, string, string2, n2, string3, n3, null);
+    }
+
+    public AdmxHttp(String string, int n, String string2, String string3, int n2, String string4, int n3) throws AdmxRpcException {
+        this(string, n, string2, string3, n2, string4, n3, null);
+    }
+
+    public Proxy getProxy() {
+        if (LC.enterOn()) {
+            LC.enter("getProxy");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("getProxy");
+        }
+        return this._proxy;
+    }
+
+    public void setProxy(Proxy proxy) {
+        if (LC.enterOn()) {
+            LC.enter("setProxy");
+        }
+        this._proxy = proxy;
+        HttpClient.useProxy(proxy);
+        if (LC.leaveOn()) {
+            LC.leave("setProxy");
+        }
+    }
+
+    synchronized void connect(String string, String string2, int n, String string3, int n2, Proxy proxy) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("connect");
+        }
+        try {
+            if (proxy != null) {
+                LC.info("connect", "using proxy");
+            }
+            this.setProxy(proxy);
+            if (this._protocol != 1) {
+                LC.info("connect", "Using HTTP");
+                if (n == -1) {
+                    n = 4060;
+                    LC.info("connect", "DEFAULT_ADMS_WEB_PORT");
+                }
+                if (LC.debugOn()) {
+                    LC.debug("connect", "Using HTTP server '" + string2 + "' on port '" + n + "' with protocol '" + this._protocol + "'");
+                }
+                this._cl = new HttpClient(this._protocol, string2, n);
+            } else {
+                LC.info("connect", "Using HTTPS");
+                if (n == -1) {
+                    n = 4061;
+                    LC.info("connect", "DEFAULT_ADMS_WEB_SSL_PORT");
+                }
+                if (LC.debugOn()) {
+                    LC.debug("connect", "Using HTTP server '" + string2 + "' on port '" + n + "' with protocol '" + this._protocol + "'");
+                }
+                this._cl = new HttpClient(this._protocol, string2, n);
+            }
+            this._hostname = new NVPair("host", string3);
+            this._port = new NVPair("port", String.valueOf(n2));
+            this._sid = new NVPair("accessToken", string);
+        }
+        catch (Exception exception) {
+            LC.fatal("connect", "", (Throwable)exception);
+            throw new AdmxRpcException(exception.getMessage());
+        }
+        if (LC.leaveOn()) {
+            LC.leave("connect");
+        }
+    }
+
+    synchronized void connect(String string, int n, String string2, int n2, Proxy proxy) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("connect");
+        }
+        try {
+            this.setProxy(proxy);
+            if (this._protocol != 1) {
+                if (n == -1) {
+                    n = 4060;
+                }
+                this._cl = new HttpClient(this._protocol, string, n);
+            } else {
+                if (n == -1) {
+                    n = 4061;
+                }
+                this._cl = new HttpClient(this._protocol, string, n);
+            }
+            this._hostname = new NVPair("host", string2);
+            this._port = new NVPair("port", String.valueOf(n2));
+            this._sid = new NVPair("sessionId", "");
+        }
+        catch (Exception exception) {
+            LC.fatal("connect", "", (Throwable)exception);
+            throw new AdmxRpcException(exception.getMessage());
+        }
+        if (LC.leaveOn()) {
+            LC.leave("connect");
+        }
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    public synchronized void disconnect() {
+        if (LC.enterOn()) {
+            LC.enter("connect");
+        }
+        if (this.isDMS) {
+            this._loggedOn = false;
+            if (LC.leaveOn()) {
+                LC.leave("connect");
+            }
+            return;
+        }
+        try {
+            NVPair[] arrnVPair = new NVPair[]{this._sid};
+            this.command(this._procMethod, "/archive/admin/close", arrnVPair, true);
+            this._cl.cl_destroy();
+            this._cl = null;
+        }
+        catch (AdmxRpcException admxRpcException) {
+            LC.fatal("connect", "", (Throwable)admxRpcException);
+        }
+        finally {
+            this._loggedOn = false;
+        }
+        if (LC.leaveOn()) {
+            LC.leave("connect");
+        }
+    }
+
+    public String command(String string) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("command");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("command");
+        }
+        return this.command(new NVPair("command", string));
+    }
+
+    public String command(NVPair nVPair) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("command");
+        }
+        NVPair[] arrnVPair = !this._filter ? new NVPair[]{this._sid, nVPair, new NVPair("filter", "off")} : new NVPair[]{this._sid, nVPair};
+        if (LC.leaveOn()) {
+            LC.leave("command");
+        }
+        return this.command(this._procMethod, "/archive/admin/exec", arrnVPair);
+    }
+
+    public String command(int n, String string, NVPair[] arrnVPair) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("command");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("command");
+        }
+        return this.command(n, string, arrnVPair, false);
+    }
+
+    synchronized String command(int n, String string, NVPair[] arrnVPair, boolean bl) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("command");
+        }
+        Object object = null;
+        try {
+            Object object2;
+            if (LC.debugOn()) {
+                object2 = new StringBuffer();
+                for (int i = 0; i < arrnVPair.length; ++i) {
+                    if (i > 0) {
+                        object2.append('&');
+                    }
+                    object2.append(arrnVPair[i].getName());
+                    object2.append("=");
+                    if (arrnVPair[i].getValue().length() > 16383) {
+                        object2.append(arrnVPair[i].getValue().substring(0, 16383));
+                        continue;
+                    }
+                    object2.append(arrnVPair[i].getValue());
+                }
+                String string2 = this._cl.getProtocolString() + "://" + this._cl.getHost() + ":" + this._cl.getPort();
+                LC.debug("command", "Executing cmd: " + string2 + string + "?" + object2.toString() + " (with timeout: " + _timeout + ")");
+            }
+            object = this._cl.cl_call(n, string, arrnVPair, _timeout, bl);
+            if (string.equals("/archive/admin/status") && object.getStatusCode() == 500) {
+                object = object2 = new HTTPResponse(545, object.getHeaders(), object.getData());
+            }
+            if (LC.debugOn()) {
+                LC.debug("command", "Cmd HTTP response: " + object.getStatusCode());
+            }
+            AdmxHTTPResult admxHTTPResult = new AdmxHTTPResult((HTTPResponse)object);
+        }
+        catch (ConnectException connectException) {
+            LC.error("command", "Network communications failed. ", (Throwable)connectException);
+            throw new AdmxRpcException("Network communication with server failed. Do you want to disconnect?");
+        }
+        catch (InterruptedException interruptedException) {
+            LC.error("command", "Timeout expired, no response from server", (Throwable)interruptedException);
+            throw new AdmxRpcException("Timeout expired, no response from server");
+        }
+        catch (Exception exception) {
+            LC.error("command", "Connection lost. ", (Throwable)exception);
+            throw new AdmxRpcException("Connection lost. Please, try to reconnect to the server.");
+        }
+        if (admxHTTPResult.error != 0) {
+            LC.info("command", admxHTTPResult.buf.toString());
+            throw new AdmxRpcException(admxHTTPResult.buf);
+        }
+        if (LC.leaveOn()) {
+            LC.leave("command");
+        }
+        return admxHTTPResult.buf;
+    }
+
+    public synchronized void logon(String string, String string2, String string3) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("logon", "Enc: " + string3);
+        }
+        if (this.isDMS) {
+            this._loggedOn = true;
+            if (LC.leaveOn()) {
+                LC.leave("logon");
+            }
+            return;
+        }
+        NVPair nVPair = new NVPair("user", string);
+        String string4 = null;
+        if (string3.equals("Blowfish")) {
+            string4 = PwdCrypt.pwencrypt((String)string2);
+        }
+        NVPair nVPair2 = new NVPair("pwcrypt", string4.equals("") ? "{}" : string4);
+        NVPair[] arrnVPair = new NVPair[]{this._hostname, this._port, nVPair, nVPair2};
+        HTTPResponse hTTPResponse = null;
+        try {
+            hTTPResponse = this._cl.cl_call(this._procMethod, "/archive/admin/open", arrnVPair, _timeout, false);
+            AdmxHTTPResult admxHTTPResult = new AdmxHTTPResult(hTTPResponse);
+            if (admxHTTPResult.error != 0) {
+                throw new AdmxRpcException(admxHTTPResult.buf);
+            }
+            this._sid = new NVPair("sessionId", admxHTTPResult.sid);
+            this._loggedOn = true;
+        }
+        catch (Exception exception) {
+            LC.fatal("logon", "", (Throwable)exception);
+            if (exception instanceof AdmxException) {
+                throw new AdmxRpcException(exception.getMessage());
+            }
+            throw new AdmxRpcException("Communication failed");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("logon");
+        }
+    }
+
+    public synchronized void logon_dpinfo(String string, String string2) throws AdmxRpcException {
+        Object object;
+        Object object2;
+        Object object3;
+        Object object4;
+        NVPair[] arrnVPair;
+        if (LC.enterOn()) {
+            LC.enter("logon");
+        }
+        if (this.isDMS) {
+            this._loggedOn = true;
+            if (LC.leaveOn()) {
+                LC.leave("logon");
+            }
+            return;
+        }
+        int n = 11;
+        try {
+            object3 = new NVPair("command", "cf_get_server_info");
+            object4 = new NVPair[]{object3};
+            object = null;
+            object = this._cl.cl_call(this._procMethod, "/archive/admin/exec", (NVPair[])object4, _timeout, false);
+            arrnVPair = new NVPair[]((HTTPResponse)object);
+            if (arrnVPair.error != 0) {
+                throw new AdmxRpcException(arrnVPair.buf);
+            }
+            object2 = arrnVPair.buf.substring(1 + arrnVPair.buf.lastIndexOf(125), arrnVPair.buf.length());
+            n = Integer.parseInt((String)object2);
+        }
+        catch (Exception exception) {
+            LC.fatal("logon", "", (Throwable)exception);
+            if (exception instanceof AdmxException) {
+                throw new AdmxRpcException(exception.getMessage());
+            }
+            throw new AdmxRpcException("Communication failed");
+        }
+        object3 = null;
+        if (n >= 11) {
+            object3 = PwdCrypt.pwencrypt((String)string2);
+        }
+        object4 = new NVPair("user", string);
+        object = new NVPair("pwcrypt", object3.equals("") ? "{}" : object3);
+        arrnVPair = new NVPair[]{object4, object};
+        object2 = null;
+        try {
+            object2 = this._cl.cl_call(this._procMethod, "/archive/admin/open", arrnVPair, _timeout, false);
+            AdmxHTTPResult admxHTTPResult = new AdmxHTTPResult((HTTPResponse)object2);
+            if (admxHTTPResult.error != 0) {
+                throw new AdmxRpcException(admxHTTPResult.buf);
+            }
+            this._sid = new NVPair("sessionId", admxHTTPResult.sid);
+            this._loggedOn = true;
+        }
+        catch (Exception exception) {
+            LC.fatal("logon", "", (Throwable)exception);
+            if (exception instanceof AdmxException) {
+                throw new AdmxRpcException(exception.getMessage());
+            }
+            throw new AdmxRpcException("Communication failed");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("logon");
+        }
+    }
+
+    public boolean isLoggedOn() {
+        if (LC.enterOn()) {
+            LC.enter("isLoggedOn");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("isLoggedOn");
+        }
+        return this._loggedOn;
+    }
+
+    public void setBlockingCallback(BlockingCallback blockingCallback) {
+        if (LC.enterOn()) {
+            LC.enter("setBlockingCallback - NOT SUPPORTED");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("setBlockingCallback - NOT SUPPORTED");
+        }
+    }
+
+    public static int getTimeout() {
+        if (LC.enterOn()) {
+            LC.enter("getTimeout");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("getTimeout");
+        }
+        return _timeout;
+    }
+
+    public static void setTimeout(int n) {
+        if (LC.enterOn()) {
+            LC.enter("setTimeout");
+        }
+        _timeout = n;
+        if (LC.leaveOn()) {
+            LC.leave("setTimeout");
+        }
+    }
+
+    public String call(String string) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("call");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("call");
+        }
+        return this.command(string);
+    }
+
+    public String call(String string, String string2) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("call");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("call");
+        }
+        return this.call(string, new String[]{string2});
+    }
+
+    public String call(String string, String string2, String string3) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("call");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("call");
+        }
+        return this.call(string, new String[]{string2, string3});
+    }
+
+    public String call(String string, String[] arrstring) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("call");
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(string);
+        for (int i = 0; i < arrstring.length; ++i) {
+            String string2 = arrstring[i] == null ? "^" : arrstring[i];
+            Admx.appendElement(stringBuffer, string2);
+        }
+        if (LC.leaveOn()) {
+            LC.leave("call");
+        }
+        return this.command(stringBuffer.toString());
+    }
+
+    public String getAspects() throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("getAspects");
+        }
+        return this.command(this._procMethod, "/archive/asconf", new NVPair[]{new NVPair("command", "getaspects"), this._sid});
+    }
+
+    public String readAspect(String string, String string2, String string3) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("readAspect");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("readAspect");
+        }
+        return this.command(this._procMethod, "/archive/asconf", new NVPair[]{new NVPair("command", "readaspect"), this._sid, new NVPair("aspect", string), new NVPair("persistence", string3), new NVPair("configName", string2)});
+    }
+
+    public String readAspectVersion(String string, String string2, String string3) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("readAspectVersion");
+        }
+        if (LC.leaveOn()) {
+            LC.leave("readAspectVersion");
+        }
+        return this.command(this._procMethod, "/archive/asconf", new NVPair[]{new NVPair("command", "readaspect"), this._sid, new NVPair("aspect", string), new NVPair("version", string3), new NVPair("configName", string2)});
+    }
+
+    public String writeAspect(String string, String string2, String string3, String string4) throws AdmxRpcException {
+        if (LC.enterOn()) {
+            LC.enter("writeAspect");
+        }
+        String string5 = System.getProperty("user.home", "");
+        StringBuffer stringBuffer = new StringBuffer(string5);
+        if (!(string5.equals("") || string5.endsWith("/") || string5.endsWith("\\"))) {
+            stringBuffer.append("/");
+        }
+        stringBuffer.append("writtenaspect.xml");
+        String string6 = stringBuffer.toString();
+        try {
+            FileWriter fileWriter = new FileWriter(string6, false);
+            fileWriter.write(string);
+            fileWriter.flush();
+            fileWriter.close();
+            LC.info("writeAspect", "Successfully written XML aspect file to '" + string6 + "'");
+        }
+        catch (IOException iOException) {
+            LC.error("writeAspect", "Error saving current aspect to XML file '" + string6 + "'", (Throwable)iOException);
+        }
+        if (LC.leaveOn()) {
+            LC.leave("writeAspect");
+        }
+        return this.command(this._procMethod, "/archive/asconf", new NVPair[]{new NVPair("command", "writeaspect"), this._sid, new NVPair("aspect", string2), new NVPair("xmldoc", string), new NVPair("persistence", string4), new NVPair("configName", string3)});
+    }
+
+    protected String getSessionId() {
+        if (LC.enterOn()) {
+            LC.enter("getSessionId");
+        }
+        if (this._sid == null) {
+            if (LC.leaveOn()) {
+                LC.leave("getSessionId");
+            }
+            return "";
+        }
+        if (LC.leaveOn()) {
+            LC.leave("getSessionId");
+        }
+        return this._sid.getValue();
+    }
+
+    public void setFilter(boolean bl) {
+        if (LC.enterOn()) {
+            LC.enter("setFilter");
+        }
+        this._filter = bl;
+        if (LC.leaveOn()) {
+            LC.leave("setFilter");
+        }
+    }
+}
+

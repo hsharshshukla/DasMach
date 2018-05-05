@@ -1,0 +1,88 @@
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.util.*;
+import java.io.*;
+public class Zigwheels {
+public static void main(String args[]) throws IOException{
+	String website = "https://www.cartrade.com/";
+	Workbook workbook = new XSSFWorkbook();
+	File file =
+	new File("/development/PycharmProjects/Dasmach/data/brands.txt");
+	Scanner sc = new Scanner(file);
+	Document d,vd = null;
+	
+	while (sc.hasNextLine()){
+	  String brand =sc.nextLine();
+	  String url = website  + brand + "-cars";		
+	   d = Jsoup.connect(url).timeout(6000).get();
+	   Elements ele = d.select("div#find_tab1");
+	   for (Element element : ele.select("div.content")){
+		   String car_name = element.select("a").attr("title");
+		   String feature  = element.select("p").text();		   
+		   car_name = car_name.substring(car_name.indexOf(brand) + brand.length()+ 2,car_name.length() );
+		   System.out.println(car_name);
+		   String[] car = car_name.split("");
+		   for(int i=0; i <car.length; i++){
+			   if(i==0) {
+				   car [0] = car[0].toLowerCase(); }
+			   else {
+				   car[0] = car[i-1] + '-' + car[i].toLowerCase();
+			   }
+			   
+			   
+			   
+		   }
+		   /*url = url + '/' + car[0];
+		   vd = Jsoup.connect(url).timeout(6000).get();
+		   Elements ele_vd = d.select("div#Variants");
+		   for (Element element_vd : ele_vd.select("div.content")){
+			   String var_name = element.select("a").attr("title");
+			   */
+		   System.out.println("hi");
+		// List up Models
+		    
+	        XSSFSheet sheet = workbook.createSheet("Car Models");
+	         
+	        Object[][] bookData = {
+	                {brand, car_name, 0},	                
+	        };
+	 
+	        int rowCount = 0;
+	         
+	        for (Object[] aBook : bookData) {
+	            Row row = sheet.createRow(++rowCount);
+	             
+	            int columnCount = 0;
+	             
+	            for (Object field : aBook) {
+	                Cell cell = row.createCell(++columnCount);
+	                if (field instanceof String) {
+	                    cell.setCellValue((String) field);
+	                } else if (field instanceof Integer) {
+	                    cell.setCellValue((Integer) field);
+	                }
+	            }
+	             
+	        }
+	         
+	         
+	        
+	    }
+	   
+	   		}
+	try (FileOutputStream outputStream = new FileOutputStream("JavaBooks.xlsx")) {
+        workbook.write(outputStream);
+    }
+	  workbook.close(); 
+	}
+		
+}

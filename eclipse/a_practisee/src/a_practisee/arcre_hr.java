@@ -1,0 +1,50 @@
+package a_practisee;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+
+public class arcre_hr {
+	    static long countArray(int n, int k, int x) {
+	        // Return the number of ways to fill in the array.
+	        int r = n-2;
+			//Calculate Combination - kcr = k!/ (r!*(k-1)!)
+		//Calculating factorial 
+			long kf=1;
+			long rf =1;
+			long krf=1;
+			int M =1000000009;
+			for (int i=1;i<=k;i++){			
+				kf = (kf*i)%M;
+				
+			if(i==r){
+				rf = kf;
+			}
+			if (i==(k-r)){
+				krf=kf;
+			}
+				
+			}
+			//Calculatin of combination 
+			 long comb=0;
+	        if((kf==0)||(rf==0)||(krf==0) ){}else{
+	        comb =(kf/(rf*krf));
+	        }
+			return comb;
+		
+	        
+	    }
+
+	    public static void main(String[] args) {
+	        Scanner in = new Scanner(System.in);
+	        int n = in.nextInt();
+	        int k = in.nextInt();
+	        int x = in.nextInt();
+	        long answer = countArray(n, k, x);
+	        System.out.println(answer);
+	        in.close();
+	    }
+	}
+

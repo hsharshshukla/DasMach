@@ -1,0 +1,17 @@
+package codechef;
+
+import java.util.Scanner;
+public class operator {
+	public static void main(String args[]){
+	Scanner in = new Scanner(System.in);
+	int n = in.nextInt(),a=0,b=0;
+	char r =' ';
+	
+	for (int i=0;i<n;i++){
+		a = in.nextInt();
+		b = in.nextInt();
+	 	if(a>b){r='>';}else if (a<b){r='<';} else{r='=';}
+	 }
+	}
+	
+}

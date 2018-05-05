@@ -1,0 +1,20 @@
+package codechef;
+import java.util.Scanner;
+
+public class AlienChef {
+public static void main(String args[]){
+	
+	Scanner in = new Scanner(System.in); //Input 
+	
+	//Prepare song Array 
+	int n = in.nextInt();
+	
+	
+	//loop for Alien Groups
+	//loop - each Alien for each song 
+	
+	//
+}
+	
+	
+}

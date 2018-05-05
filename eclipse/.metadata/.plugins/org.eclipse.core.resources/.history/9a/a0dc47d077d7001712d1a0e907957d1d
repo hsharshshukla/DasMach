@@ -1,0 +1,16 @@
+package dec_package;
+
+import java.util.Scanner;
+public class Diamonds { 
+	public static void main(String args[]){
+		Scanner stdin = new Scanner(System.in);
+		int t = stdin.nextInt();
+		for (int i=0;i<t;i++){
+			int a =stdin.nextInt();
+			for (int j=0;j<(n*n);j++){
+				
+			}
+		}
+	}
+
+}

@@ -1,0 +1,14 @@
+package codechef;
+import java.util.Scanner;
+
+public class AlienChef {
+public static void main(String args[]){
+	//loop for Alien Groups
+
+	//loop - each Alien for each song 
+	
+	//
+}
+	
+	
+}

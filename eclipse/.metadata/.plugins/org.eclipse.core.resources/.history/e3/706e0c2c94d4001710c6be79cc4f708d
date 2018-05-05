@@ -1,0 +1,16 @@
+/*
+ * Decompiled with CFR 0_123.
+ */
+package ixos.xsadmx;
+
+public class AdmxParserException
+extends AdmxException {
+    public AdmxParserException() {
+        this("Wrong result format");
+    }
+
+    public AdmxParserException(String string) {
+        super(string);
+    }
+}
+

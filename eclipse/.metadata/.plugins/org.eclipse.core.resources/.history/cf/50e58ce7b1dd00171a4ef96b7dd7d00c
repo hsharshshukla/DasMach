@@ -1,0 +1,66 @@
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.io.File;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class JsoupinExcel{
+
+	public static void main(String[] args) throws IOException {
+		//Excel declaration
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet("Java Books");
+		
+		Object [][] bookData={
+				{"HeadFirst","Java",10},
+				{"HeadFirst","JavaScript",20},
+				{"HeadFirst","C++",30},
+				{"HeadFirst","C",40},
+				
+		};
+		int rowCount =0;
+		
+		for (Object[] aBook: bookData){
+			Row row = sheet.createRow(++rowCount);
+			int columnCount = 0;
+			for (Object field: aBook){
+				Cell cell = row.createCell(++columnCount);
+				if(field instanceof String){
+					cell.setCellValue((String) field);
+					
+				}else if(field instanceof Integer){
+					cell.setCellType(arg0);
+				}
+				
+			}
+		}
+		
+		
+		File filename = new File("/development/develop/testfiles/webscrap_fos.txt");
+		OutputStream ostream=null;
+		Document d=Jsoup.connect("http://www.wikihow.com/wikiHowTo?search=Signal+Wifi").timeout(6000).get();
+		Elements ele=d.select("div#searchresults_list");
+		for (Element element : ele.select("div.result")) {
+			String img_url=element.select("div.result_thumb img").attr("src");
+			String title=element.select("div.result_data a").text();
+		
+			// Fileoutputstream write 
+			ostream = new FileOutputStream(filename);
+			byte [] content = img_url.getBytes();
+			ostream.write(content);
+			ostream.flush();
+			ostream.close();
+			
+		}
+		ostream.close();
+	}
+
+}

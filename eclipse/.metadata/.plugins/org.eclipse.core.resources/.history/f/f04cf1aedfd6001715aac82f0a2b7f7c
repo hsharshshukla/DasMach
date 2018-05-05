@@ -1,0 +1,6 @@
+package dec_package;
+
+public class inttoArray {
+	public static void main(String args[]){}
+
+}

@@ -1,0 +1,23 @@
+package hackerRank;
+import java.util.Scanner;
+public class arraycreation {
+	public static void main(String args[]){
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		int k = in.nextInt();
+		int x = in.nextInt();
+		int r = 0;
+		//Calculate Combination - kcr = k!/ (r!*(k-1)!)
+			
+		in.close();
+	}
+    
+	static long factorial(int n, int r){
+		long c =0;
+		
+		
+		
+		return c;
+		
+	}
+}

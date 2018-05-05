@@ -1,0 +1,70 @@
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.util.*;
+import java.io.*;
+//laber (col,row,content)
+
+public class Zigwheels {
+public static void main(String args[]) throws Exception{
+	String website = "https://www.cartrade.com/";	
+	File f = new File("/development/PycharmProjects/Dasmach/data/Brand_Modellist.xlsx");
+	WritableWorkbook testfile = Workbook.createWorkbook(f);
+	WritableSheet sheet = testfile.createSheet("Car Models",0);
+	File file =
+	new File("/development/PycharmProjects/Dasmach/data/brands.txt");
+	Scanner sc = new Scanner(file);
+	Document d,vd = null;
+	int count=0;
+	while (sc.hasNextLine()){
+	  String brand =sc.nextLine();
+	  String url = website  + brand + "-cars";		
+	   d = Jsoup.connect(url).timeout(6000).get();
+	   Elements ele = d.select("div#find_tab1");
+	   for (Element element : ele.select("div.content")){
+		   String car_name = element.select("a").attr("title");
+		   String feature  = element.select("p").text();		   
+		   car_name = car_name.substring(car_name.indexOf(brand) + brand.length()+ 2,car_name.length() );		   
+		   String[] car = car_name.split(" ");
+		   for(int i=0; i <car.length; i++){
+			   if(i==0) {
+				   car [0] = car[0].toLowerCase(); }
+			   else {
+				   car[0] = car[i-1] + '-' + car[i].toLowerCase();
+			   }			   
+		   }
+		   
+		   url = url + '/' + car[0];
+		   vd = Jsoup.connect(url).timeout(6000).get();
+		   Elements ele_vd = d.select("div.MMvartable");
+		   for (Element element_vd : ele_vd.select("a")){
+			   String var_name = element.select("a").attr("title");
+			   System.out.println(var_name);
+		   }
+		   
+		// List up Models
+		    if (count ==0){
+		    	Label brand_name = new Label(0, count, "Brand");
+		        sheet.addCell(brand_name);
+		        Label  model_name = new Label(1,count, "Model");
+		        sheet.addCell(model_name);
+		    }
+		    count = count  + 1; 
+	        Label l1 = new Label(0, count, brand);
+	        sheet.addCell(l1);
+	        Label l2 = new Label(1,count,car_name);
+	        sheet.addCell(l2);
+	          
+	        }   
+	    }	
+	//testfile.write();  
+	  //  testfile.close(); 
+	    System.out.println("All Models Downloaded");
+	}		
+}

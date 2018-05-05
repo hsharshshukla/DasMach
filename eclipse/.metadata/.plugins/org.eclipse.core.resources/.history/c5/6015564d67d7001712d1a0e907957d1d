@@ -1,0 +1,107 @@
+package dec_package;
+import java.util.Scanner;
+
+public class football {
+public static void main(String args[]){
+		
+	Scanner in = new Scanner(System.in);
+	
+	while(in.hasNext()){
+		String inputline = "";
+		int a=0,b=0;
+		char [] ag= new char[10];
+		char [] bg= new char[10];
+		int ai =0,bi=0;
+		
+//Getting Input Stream 
+		 inputline = in.next();
+		 
+		for (int i=1;i<=10;i++){ 
+			
+			if(i%2 ==0){
+//Goals for Team B
+				bg[bi]= inputline.charAt(i-1);
+				if(bg[bi] == '1'){
+					b++;
+				}
+				bi++;
+			}else{
+//Goals for Team A
+				
+				ag[ai]= inputline.charAt(i-1);
+				if(ag[ai] == '1'){
+					a++;
+				}
+				ai++;	
+				
+			}
+// if Advantage - then print
+			if((a==3 & b==0) || (a==4&b==1)){
+				System.out.println("TEAM-A "+(i));
+				break;
+			}else if ((a==0 & b==3)||(a==1&b==4)){
+				System.out.println("TEAM-A "+(i));
+				break;
+			} else{}
+			
+// Check if Advantage of 2 goals ahead on 4th turn
+			if(){}else if(){}else{}
+//check if Advantage of 2 Goals on 5th turn
+			if(){}else if(){}else{}
+		}
+
+//Calculate Total 
+		if (a>b){
+			System.out.println("TEAM-A "+10);
+		}else if(b>a){
+			System.out.println("TEAM-B "+10);
+		} else{
+			// Calculate Sudden Death
+			a=0;
+			b=0;
+			char flag =' ';
+			for(int m=11;m<=20;m++){
+				
+				if(m%2 ==0){
+	//Goals for Team B
+					bg[bi]= inputline.charAt(m-1);
+					if(bg[bi] == '1'){
+						b++;
+					}
+					bi++;
+				
+					flag ='x';
+				}else{
+	//Goals for Team A
+					
+					ag[ai]= inputline.charAt(m-1);
+					if(ag[ai] == '1'){
+						a++;
+					}
+					ai++;	
+					
+					flag =' ';
+				}	
+				
+		//Calculate the difference
+				if (flag=='x'){
+				if(a-b==1){
+					System.out.println("TEAM-A "+(10+m));
+					break;
+				} else if(b-a==1){
+					System.out.println("TEAM-B "+(10+m));
+					break;
+				} else{
+					System.out.println("TIE");
+					break;
+				}
+				}
+			}
+		}
+		
+		
+	}
+	in.close();
+	
+}
+}

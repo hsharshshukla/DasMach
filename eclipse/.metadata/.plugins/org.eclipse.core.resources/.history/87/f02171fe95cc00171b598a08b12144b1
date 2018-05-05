@@ -1,0 +1,25 @@
+class Node{
+	int key;
+	Node left,right;
+	public Node(int item){
+	key = item;
+	left = right = null;
+	}
+}
+
+class BinTree{
+	Node root;
+	
+	BinTree(int key){
+		root = new Node(key);
+	}
+	BinTree()
+	{
+		root = null;
+	}
+	public static void main(String args[]){
+		BinTree tree = new BinTree();
+//Create root 
+	}
+}
+

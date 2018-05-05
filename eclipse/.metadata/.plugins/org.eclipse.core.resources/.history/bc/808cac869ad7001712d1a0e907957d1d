@@ -1,0 +1,8 @@
+package dec_package;
+
+public class xor_chef {
+
+	public static void main(String args[]){
+		
+	}
+}

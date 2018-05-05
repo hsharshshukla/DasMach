@@ -1,0 +1,54 @@
+package hackerRank;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+public class Solution {
+    public static int numberNeeded(String first, String second) {
+    	char flag;
+    	int count=0;
+    	//Compare second to first
+    	for (int i=0;i<second.length();i++){
+    		flag ='x';
+            for (int j=0;j<first.length();j++){
+            	if (second.charAt(i) == first.charAt(j)){
+                    flag = ' ';
+                    break;
+                    }         
+            }
+
+            if (flag == 'x'){
+                    count = count + 1;
+                }
+    	}
+    	//Comparing 
+    	for (int i=0;i<first.length();i++){
+    		flag ='x';
+            for (int j=0;j<second.length();j++){
+            	if (second.charAt(i) == first.charAt(j)){
+                    flag = ' ';
+                    break;
+                    }         
+            }
+
+            if (flag == 'x'){
+                    count = count + 1;
+                }
+    	}
+    	//Returning result
+    	return count;
+}            
+				
+        
+        
+      
+    
+  
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String a = in.next();
+        String b = in.next();
+        System.out.println(numberNeeded(a, b));
+    }
+}

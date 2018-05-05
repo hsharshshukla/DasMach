@@ -1,0 +1,36 @@
+package hackerRank;
+
+import java.util.Scanner;
+import java.io.BufferedInputStream;
+
+public class DiwaliLights {
+//Set tree as per the input in line 
+static class Node {
+	int key;
+	Node left,right;
+	public Node(int item){
+		key = item;
+		left = right = null;
+	}
+}
+static class BinTree{
+	Node root;
+	BinTree (int key){
+		root = new Node(key);
+	}
+	BinTree (){
+		root = null;
+	}
+}
+ 
+
+
+public static void main (String args[]){
+	Scanner input = new Scanner(new BufferedInputStream(System.in));
+	BinTree tree = new BinTree();
+}	
+	//Count rest of nodes after detaching edge between each input
+//take average of all the counts and return that in your answer
+	
+	
+}

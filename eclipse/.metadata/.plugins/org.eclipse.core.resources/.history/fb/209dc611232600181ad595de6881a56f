@@ -1,0 +1,17 @@
+import java.io.*;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+public class exceltest {
+	File f = new File("");
+	WritableWorkbook testfile = Workbook.createWorkbook(f);
+	WritableSheet sheet1 = testfile.createSheet("sheet1",0);
+	Label l = new Label(0,0,"data 1");
+	sheet1.addCell(1);
+	testfile.write();
+	testfile.close();
+
+}

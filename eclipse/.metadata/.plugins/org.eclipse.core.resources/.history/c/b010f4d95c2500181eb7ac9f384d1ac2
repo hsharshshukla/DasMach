@@ -1,0 +1,31 @@
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.util.*;
+import java.io.IOException;
+public class Zigwheels {
+public static void main(String args[]) throws IOException{
+	String [] brand = new String[10];
+	File file =
+		      new File("/development/PycharmProjects/Dasmach/data/brands.txt");
+		    Scanner sc = new Scanner(file);
+		 
+		    while (sc.hasNextLine())
+		      System.out.println(sc.nextLine());
+		  }
+	
+	brand[0] = "mercedes-benz";
+	brand[1] = "mini";
+	Document d = Jsoup.connect("https://www.cartrade.com/mercedes-benz-cars").timeout(6000).get();
+	Elements ele = d.select("div#find_tab1");
+	for (Element element : ele.select("div.content")){
+		String car_name = element.select("a").attr("title");
+		String feature  = element.select("p").text();
+		System.out.println(car_name);
+		System.out.println(feature);
+		
+	}
+		
+}
+}

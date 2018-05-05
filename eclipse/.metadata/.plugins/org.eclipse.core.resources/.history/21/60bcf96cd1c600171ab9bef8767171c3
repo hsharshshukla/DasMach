@@ -1,0 +1,9 @@
+//mathclient
+import java.rmi.*;
+import java.rmi.registry.*;
+import java.awt.*;
+import java.awt.event.*;
+public class mathClient extends Frame implements ActionListener{
+	Button B1 =new Button("Sum");
+	Button B2 =new Button("Substract");
+}

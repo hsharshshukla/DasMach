@@ -1,0 +1,18 @@
+package hackerRank;
+import java.util.Scanner;
+public class arraycreation {
+	public static void main(String args[]){
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		int k = in.nextInt();
+		int x = in.nextInt();
+		int r = n-2;
+		//Calculate Combination - kcr = k!/ (r!*(k-1)!)
+	//		long comb = (factorial (k))/((factorial (r))*(k-r)); 
+			System.out.println(comb);
+		in.close();
+	}
+    // Calculating factorial in iteratively
+	
+	
+}

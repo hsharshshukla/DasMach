@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+<<<<<<< HEAD
+org.eclipse.rse.preferences.order.connections=localhost.Local
+=======
+org.eclipse.rse.preferences.order.connections=rhel7.Local
+>>>>>>> initial

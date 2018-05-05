@@ -1,0 +1,21 @@
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import java.io.*;
+import java.text.*;
+import java.util.*;
+import org.w3c.dom.*;
+
+public class DomParser {
+	public static void main(String args[]){
+//Get the Dom Builder Factory
+	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	
+//Get the Dom Builder 
+	Try {DocumentBuilder builder = factory.newDocumentBuilder();} catch (ParserConfigurationException e){e.printStackTrace();}
+	
+	
+//Load and Parse the XML Document
+	Document document = builder.parse(ClassLoader.getSystemResourceAsStream("/development/test.xml"));
+	
+	}
+}

@@ -1,0 +1,11 @@
+
+public class exceltest {
+	file f = new File("");
+	WritableWorkbook testfile = Workbook.createWorkbook(f);
+	WritableSheet sheet1 = testfile.createSheet("sheet1",0);
+	Label l = new Label(0,0,"data 1");
+	sheet1.addCell(1);
+	testfile.write();
+	testfile.close();
+
+}

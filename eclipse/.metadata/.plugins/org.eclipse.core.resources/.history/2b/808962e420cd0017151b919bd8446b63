@@ -1,0 +1,9 @@
+package hackerRank;
+
+public class DiwaliLights {
+//Set tree as per the input in line 
+//Count rest of nodes after detaching edge between each input
+//take average of all the counts and return that in your answer
+	
+	
+}

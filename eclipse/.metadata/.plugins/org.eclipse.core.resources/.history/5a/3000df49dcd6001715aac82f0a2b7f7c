@@ -1,0 +1,23 @@
+package dec_package;
+import java.util.Scanner;
+
+public class football {
+public static void main(String args[]){
+	int a=0,b=0;
+	
+	Scanner in = new Scanner(System.in);
+	
+	while(in.hasNext()){
+		for (int i=1;i<=20;i++){
+			if(i%2 ==0){
+//Goals for Team B
+				a[]
+			}else{
+//Goals for Team A
+				
+			}
+		}
+	}
+	
+}
+}

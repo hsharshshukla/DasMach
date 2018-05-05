@@ -1,0 +1,8 @@
+import java.util.Scanner;
+public class MinimumHTriangle {
+	System.out.println("Please enter Height and Minimum Area of Desired Trianges in same order respectively -Heigth and Area :");
+	Scanner input = new Scanner(System.in);
+	
+	
+
+}

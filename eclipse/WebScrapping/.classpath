@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/development/lib/jsoup-1.11.2.jar" sourcepath="/tmp/.org.sf.feeling.decompiler1520792191209/source/jsoup-1.11.2-sources.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.17/poi-excelant-3.17.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.17/poi-ooxml-3.17.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.17/poi-ooxml-schemas-3.17.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.17/poi-scratchpad-3.17.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.17/ooxml-lib/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.17/ooxml-lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="/development/lib/poi-3.9.jar/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="/development/jxl-2.6.12.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

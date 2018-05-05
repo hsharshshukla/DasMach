@@ -1,0 +1,48 @@
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.io.FileOutputStream;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.File;
+
+public class JsoupRun {
+
+	public static void main(String[] args) throws IOException {
+		//file write and Stream Buffer for file writing
+		//String filename = "/development/develop/testfiles/webscrap_fos.txt";
+		File filename = new File("/development/develop/testfiles/webscrap_fos.txt");
+		OutputStream ostream=null;
+		
+		//BufferedWriter bw = null;
+		//FileWriter fw = null;
+		//fw = new FileWriter(filename);
+		Document d=Jsoup.connect("http://www.wikihow.com/wikiHowTo?search=Signal+Wifi").timeout(6000).get();
+		Elements ele=d.select("div#searchresults_list");
+		for (Element element : ele.select("div.result")) {
+			String img_url=element.select("div.result_thumb img").attr("src");
+			//System.out.println(img_url);
+			
+			String title=element.select("div.result_data a").text();
+			//bw = new BufferedWriter(fw);
+			//bw.write(title);
+			//bw.write(img_url);
+			//System.out.println(title);
+			
+			
+			// Fileoutputstream write 
+			ostream = new FileOutputStream(filename);
+			byte [] content = img_url.getBytes();
+			ostream.write(content);
+			osream.flush();
+			
+		}
+		//bw.close();
+		//fw.close();
+	}
+
+}

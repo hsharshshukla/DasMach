@@ -1,0 +1,77 @@
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.util.*;
+import java.io.*;
+//laber (col,row,content)
+
+public class Zigwheels {
+public static void main(String args[]) throws Exception{
+	String website = "https://www.cartrade.com";	
+	File f = new File("/development/PycharmProjects/Dasmach/data/Brand_Modellist.xlsx");
+	WritableWorkbook testfile = Workbook.createWorkbook(f);
+	WritableSheet sheet = testfile.createSheet("Car Models",0);
+	File file =
+	new File("/development/PycharmProjects/Dasmach/data/brands.txt");
+	Scanner sc = new Scanner(file);
+	Document d,vd,vd_var = null;
+	int count=0;
+	while (sc.hasNextLine()){
+	  String brand =sc.nextLine();
+	  String url = website  +"/" + brand + "-cars";		
+	   d = Jsoup.connect(url).timeout(6000*6000).get();
+	   Elements ele = d.select("div#find_tab1");
+	   for (Element element : ele.select("div.content")){
+		   String car_name = element.select("a").attr("title");
+		   String feature  = element.select("p").text();		   
+		   car_name = car_name.substring(car_name.indexOf(brand) + brand.length()+ 2,car_name.length() );		   
+		   String href = element.select("a").attr("href");
+		   url = website + href;
+		   vd = Jsoup.connect(url).timeout(6000*6000).get();
+		   Elements ele_vd = vd.select("div.MMvartable");
+		   for (Element element_vd : ele_vd.select("a[class=brdlinkred]")){
+			   String var_name = element_vd.select("a").text();
+			   String href_vd = element_vd.select("a").attr("href");			   
+			   url = website + href_vd;
+			   System.out.println(var_name);
+			   vd_var = Jsoup.connect(url).timeout(6000*6000).get();
+			   Elements ele_vd_var = vd_var.select("div#find_tab1");
+			   for (Element element_vd_var : ele_vd_var.select("tr")){
+				   String var_name_property = element_vd_var.select("td[class=l_yellow_bg]").text();
+				   String var_name_propval = element_vd_var.select("td[class=comp_textsty]").text();
+				   System.out.println(var_name);
+			   }
+			   Elements ele_vd_var_col = vd_var.select("div.colorwrap");
+			   for (Element element_vd_var_col : ele_vd_var_col.select("div[style]")){
+				   String var_col = element_vd_var_col.select("div").attr("style");
+				   var_col = var_col.substring(var_col.indexOf("#")+1,var_col.length()) ;
+				   System.out.println(var_col);
+			   }
+		   }
+		   
+		// List up Models
+		    if (count ==0){
+		    	Label brand_name = new Label(0, count, "Brand");
+		        sheet.addCell(brand_name);
+		        Label  model_name = new Label(1,count, "Model");
+		        sheet.addCell(model_name);
+		    }
+		    count = count  + 1; 
+	        Label l1 = new Label(0, count, brand);
+	        sheet.addCell(l1);
+	        Label l2 = new Label(1,count,car_name);
+	        sheet.addCell(l2);
+	          
+	        }   
+	    }	
+	//testfile.write();  
+	  //  testfile.close(); 
+	    System.out.println("All Models Downloaded");
+	}		
+}

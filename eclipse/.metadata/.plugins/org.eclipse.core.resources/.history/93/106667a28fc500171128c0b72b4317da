@@ -1,0 +1,10 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class LRUCache {	
+		int capacity;
+		Hashmap<Integer,Node> map = new Hashmap<Integer,Node> ();
+		Node head=null;
+		Node end=null;
+	
+}

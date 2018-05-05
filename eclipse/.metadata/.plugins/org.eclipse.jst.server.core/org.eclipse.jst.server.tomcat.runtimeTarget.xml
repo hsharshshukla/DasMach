@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<classpath>
+  <source-attachment entry="/development/apache-tomcat-8.0.47/lib/ojdbc6.jar" runtime-id="Apache Tomcat v8.0" source-attachment-path="/app/oracle/product/12.1.0/dbhome_1/jdbc/lib/ojdbc6_g.jar"/>
+</classpath>

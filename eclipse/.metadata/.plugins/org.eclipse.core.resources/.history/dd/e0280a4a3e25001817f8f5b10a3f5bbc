@@ -1,0 +1,18 @@
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+public class Zigwheels {
+public static void main(String args[]) throws IOException{
+	Document d = Jsoup.connect("https://www.cartrade.com/maruti-suzuki-cars").timeout(6000).get();
+	Elements ele = d.select("div#find_tab1");
+	for (Element element : ele.select("div.content")){
+		String img_url = element.select("a").attr("title");
+		System.out.println(img_url);
+		
+	}
+		
+}
+}
