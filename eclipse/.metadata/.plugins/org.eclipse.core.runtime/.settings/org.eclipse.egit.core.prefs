@@ -1,7 +1,6 @@
-<<<<<<< HEAD
-GitRepositoriesView.GitDirectories=/d/repos/.git\:
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=initial
+GitRepositoriesView.GitDirectories=/development/repos/.git\:/development/develop/.git\:
 GitRepositoriesView.GitDirectories.relative=/d/repos/.git\:
-=======
-GitRepositoriesView.GitDirectories=/development/develop/.git\:
->>>>>>> initial
 eclipse.preferences.version=1

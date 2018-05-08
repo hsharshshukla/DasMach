@@ -1,0 +1,143 @@
+package a_practisee;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+public class unzipF {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		String zipfilepath="C:\\utility\\zip";
+		String destfolder="C:\\utility\\unzip";
+		File zipFil=new File(zipfilepath);
+		File[] zipList = zipFil.listFiles();
+		for(File fil:zipList)
+	      unzip(fil.getAbsolutePath(),destfolder);
+		String des="C:\\utility\\cxmlinvoice";
+		File srce=new File(destfolder);
+		File dest=new File(des);
+		removeSub(srce,dest);
+		delete(srce);
+		delete(zipFil);
+		
+		
+		}
+	
+	
+
+	private static void unzip(String zipfilepath, String destfolder)   {
+		// TODO Auto-generated method stub
+		File dir=new File(destfolder);
+		if(!dir.exists())
+			dir.mkdir();
+		try {
+			FileInputStream fis =new FileInputStream(zipfilepath);
+			ZipInputStream zis=new ZipInputStream(fis);
+			ZipEntry ze=zis.getNextEntry();
+			
+			while(ze!=null)
+			{
+				byte[] buffer=new byte[(int) ze.getSize()];
+				String fileName=ze.getName();
+				File newFile=new File(destfolder+File.separator+fileName);
+				if(ze.isDirectory())
+					newFile.mkdir();
+				else
+					if(!newFile.exists()){
+						newFile.getParentFile().mkdirs();
+						newFile.createNewFile();
+						
+						FileOutputStream fos=new FileOutputStream(newFile);
+						int len;
+						while((len=zis.read(buffer))>0)
+							fos.write(buffer, 0, len);
+						
+						fos.close();
+						zis.closeEntry();
+					}
+				ze=zis.getNextEntry();
+						
+						
+			}
+			zis.closeEntry();
+			zis.close();
+			fis.close();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	private static void removeSub(File srce, File dest) throws Exception {
+		// TODO Auto-generated method stub
+		
+		File[] fList = srce.listFiles();
+		
+		if(!dest.exists())
+			dest.mkdir();
+		for(File file:fList)
+		{
+		if(file.isFile())
+		{
+			String ext="";
+			int i=file.getName().lastIndexOf(".");
+			System.out.println(i);
+			if(i>0)
+			{
+				ext=file.getName().substring(i+1);
+				System.out.println(ext);
+			}
+			if(ext.equals("xml"))
+			{
+		
+			try
+			{
+			FileInputStream fis=new FileInputStream(file);
+              FileOutputStream fos= new FileOutputStream(dest.getAbsolutePath()+"/"+file.getName());
+              byte[] buf = new byte[1024];
+              int len;
+              while ((len = fis.read(buf)) > 0) {
+                  fos.write(buf, 0, len);
+              }
+              fis.close();
+              fos.close();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			}
+		}
+		else
+		{
+			removeSub(file,dest);
+		}
+		}
+		
+	}
+	private static void delete(File srce) {
+		File[] desList=srce.listFiles();
+		for(File fileD:desList){
+			if(fileD.isDirectory())
+			{
+				File fs=new File(fileD.getAbsolutePath());
+				delete(fs);	
+				fs.delete();
+			}
+			else
+				fileD.delete();
+			
+		}
+		
+		
+		
+		
+	}
+
+}

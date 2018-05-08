@@ -1,7 +1,7 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=initial
+activeuserprofiles=Team;localhost;rhel7
 eclipse.preferences.version=1
-<<<<<<< HEAD
-org.eclipse.rse.systemtype.local.systemType.defaultUserId=brick
-=======
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=harsh
-useridperkey=rhel7.Local\=harsh;
->>>>>>> initial
+useridperkey=rhel7.Local\=harsh;localhost.Local\=harsh;
