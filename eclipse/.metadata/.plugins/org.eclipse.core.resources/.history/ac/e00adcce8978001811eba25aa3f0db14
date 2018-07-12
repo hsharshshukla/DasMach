@@ -1,0 +1,11 @@
+package a_a;
+
+import java.io.*;
+import java.util.*;
+
+public class Numberofone {
+
+	public static void main(String args[]){
+		
+	}
+}

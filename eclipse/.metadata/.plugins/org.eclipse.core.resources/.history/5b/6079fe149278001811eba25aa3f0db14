@@ -1,0 +1,10 @@
+package a_a;
+import java.io.*;
+import java.util.*;
+
+public class TwodArray {
+
+	public static void main (Strings args[]){
+		
+	}
+}

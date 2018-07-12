@@ -1,0 +1,10 @@
+package a_practisee;
+import java.util.*;
+import java.io.*;
+
+public class BFS {
+	public static void main(String[], args){
+		
+	}
+	
+}

@@ -1,0 +1,52 @@
+package a_a;
+import java.io.*;
+import java.util.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+
+public class TwodArray {
+
+	private static final Scanner scanner = new Scanner(System.in);
+	public static void main (String args[]){
+		int[][] arr = new int[6][6];
+			
+		for (int i = 0; i < 6; i++) {
+            String[] arrRowItems = scanner.nextLine().split(" ");
+           // scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+            for (int j = 0; j < 6; j++) {
+            	int arrItem =0;
+            	try {
+            		arrItem = Integer.parseInt(arrRowItems[j]);
+            	}
+            	catch(ArrayIndexOutOfBoundsException exception) {
+            	    //handleTheExceptionSomehow(exception);
+            	}
+                
+                arr[i][j] = arrItem;
+            }
+        }
+		int [] sum = new int[16];
+		//count
+		int count = 0;
+		int sum_max =0;
+		
+		for (int i=1;i<5;i++){
+            for (int j=1;j<5;j++){
+                sum [count] = (arr[i-1][j-1] + arr[i-1][j] + arr[i-1][j+1] + arr[i][j] + arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1] );
+                //if sum is positive
+                
+                if (sum_max < sum[count]  && sum[count] <20 && (sum[count]>=0)){
+                	sum_max = sum[count];
+                }
+                //if sum is negative
+                
+                count = count + 1;                
+            }
+        }
+		
+		//Print output
+		System.out.println(sum_max);
+	}
+}

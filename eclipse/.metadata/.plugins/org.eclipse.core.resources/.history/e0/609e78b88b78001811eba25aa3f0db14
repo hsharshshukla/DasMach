@@ -1,0 +1,17 @@
+package a_a;
+
+import java.io.*;
+import java.util.*;
+
+public class Numberofone {
+	
+	private static final Scanner scanner = new Scanner(System.in);
+	public static void main(String args[]){
+		int n = scanner.nextInt();
+		// ones
+		int ones =0,a=0;
+		
+		
+		
+	}
+}

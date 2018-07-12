@@ -1,0 +1,11 @@
+package a_a;
+import java.io.*;
+import java.util.*;
+
+public class TwodArray {
+
+	private static final Scanner  scanner = new Scanner(System.in);
+	public static void main (String args[]){
+		int n = scanner.nextInt();
+	}
+}
