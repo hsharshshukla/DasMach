@@ -1,0 +1,60 @@
+package a_a;
+import java.util.*;
+import java.io.*;
+public class threeEqualParts {
+
+    public static void main(String args[] ) throws Exception {
+        /* Sample code to perform I/O:
+         * Use either of these methods for input
+
+        //BufferedReader
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String name = br.readLine();                // Reading input from STDIN
+        System.out.println("Hi, " + name + ".");    // Writing output to STDOUT
+*/
+        //Scanner
+        Scanner s = new Scanner(System.in);
+        String name = s.nextLine();                 // Reading input from STDIN
+        int t = Integer.valueOf(name);
+        //System.out.println("Hi, " + name + ".");    // Writing output to STDOUT
+        String case_size = s.nextLine();
+        int size = Integer.valueOf(case_size);
+        
+        String array = s.nextLine();
+        int[] arr = Arrays.stream(array).mapToInt(Integer::parseInt).toArray();
+    //Process array to get the 3 part theory
+        int count =0;
+        int posf =0;
+        int poss=0;
+        int post=0;
+        for (int i=0;i<size;i++){
+            //set position
+            if (arr[i]==1){
+                if (posf==0){
+                    posf=i;
+                }
+                else if(poss==0){
+                    poss=i;
+                }
+                else if(post==0){
+                    post=i;
+                }
+                else{}
+            }
+            if (i=size-1) {
+                if(count%3==0){
+                    
+                }
+                else {
+                    System.out.println("-1");
+                }    
+            }    
+        }
+        }
+        // Write your code here
+        
+        
+        
+
+    }
+}

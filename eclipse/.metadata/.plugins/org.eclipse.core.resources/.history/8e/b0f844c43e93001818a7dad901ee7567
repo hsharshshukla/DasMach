@@ -1,0 +1,15 @@
+package a_a;
+import java.util.*;
+public class MaxDial {
+	public static void main(String args[] ) throws Exception {
+        
+        //Scanner
+        Scanner s = new Scanner(System.in);
+        String name = s.nextLine();                 // Reading input from STDIN
+        
+        // Write your code here
+        int amt = Integer.valueOf(name);
+
+    }
+
+}

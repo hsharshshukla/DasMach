@@ -1,0 +1,8 @@
+package a_a;
+
+public class testlong {
+	//%1000000007
+	 Long dec  = 9223372036854775807;
+     System.out.println(dec);
+
+}

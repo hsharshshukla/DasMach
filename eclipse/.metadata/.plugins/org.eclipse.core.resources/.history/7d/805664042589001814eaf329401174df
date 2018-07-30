@@ -1,0 +1,62 @@
+package a_a;
+
+
+import java.util.*;
+import java.io.*;
+
+class Calculator {
+    
+    
+    int power(int n, int p) throws IllegalArgumentException {
+        int y=0;
+        double x=0;   
+         if (n<=0 || p<=0){  
+            throw new IllegalArgumentException("n and p should be non-negative"); 
+         }
+        else {
+            x = Math.pow(n,p); 
+           y=(int) x;        
+        }
+            return y;
+        /*
+        
+       try{
+         if (n<=0 || p<=0){  
+            throw new IllegalArgumentException("n and p should be non-negative"); }
+           else {
+            x = Math.pow(n,p);}  
+           y=(int) x;
+           }                  
+       catch(IllegalArgumentException e){
+           
+            System.out.println(e.getMessage());
+           //System.exit(0);
+           
+       }   
+        
+        return y;*/
+    }
+}
+
+class Exception{
+
+    public static void main(String[] args) {
+    
+        Scanner in = new Scanner(System.in);
+        int t = in.nextInt();
+        while (t-- > 0) {
+        
+            int n = in.nextInt();
+            int p = in.nextInt();
+            Calculator myCalculator = new Calculator();
+            try {
+                int ans = myCalculator.power(n, p);
+                System.out.println(ans);
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        in.close();
+    }
+}

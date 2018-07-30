@@ -1,0 +1,87 @@
+package a_a;
+
+//Java implementation to check if given Binary tree
+//is a BST or not
+
+/* Class containing left and right child of current
+chNode and key value*/
+class chNode
+{
+ int data;
+ chNode left, right;
+
+ public chNode(int item)
+ {
+     data = item;
+     left = right = null;
+ }
+}
+
+public class checkBST
+{
+ // Root of the Binary Tree
+ chNode root;
+
+ // To keep tract of previous chNode in Inorder Traversal
+ chNode prev;
+
+ boolean isBST()  {
+     prev = null;
+     return isBST(root);
+ }
+ 
+ boolean isBST(chNode root) {
+     boolean status;
+     if (root == null){
+         return true;
+     } else {
+        if (root.left != null && root.data < root.left.data){
+            return false;
+        }
+        if(root.right !=null && root.right.data < root.data){
+             return false;
+        }
+         status = isBST(root.left);
+         if (status == true){
+         status = isBST(root.right); 
+         }
+         return status;           
+     }
+ }
+
+ /* Returns true if given search tree is binary
+    search tree (efficient version) */
+ /*>>boolean isBST(chNode chNode)
+ {
+     // traverse the tree in inorder fashion and
+     // keep a track of previous chNode
+     if (chNode != null)
+     {
+         if (!isBST(chNode.left))
+             return false;
+
+         // allows only distinct values chNode
+         if (prev != null && chNode.data <= prev.data )
+             return false;
+         prev = chNode;
+         return isBST(chNode.right);
+     }
+     return true;
+ } >>*/
+
+ /* Driver program to test above functions */
+ public static void main(String args[])
+ {
+     checkBST tree = new checkBST();
+     tree.root = new chNode(4);
+     tree.root.left = new chNode(2);
+     tree.root.right = new chNode(5);
+     tree.root.left.left = new chNode(7);
+     tree.root.left.right = new chNode(3);
+
+     if (tree.isBST())
+         System.out.println("IS BST");
+     else
+         System.out.println("Not a BST");
+ }
+}

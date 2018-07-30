@@ -1,0 +1,27 @@
+package a_a;
+import java.util.*;
+public class MaxDial {
+	public static void main(String args[] ) throws Exception {
+        
+        //Scanner
+        Scanner s = new Scanner(System.in);
+        String name = s.nextLine();                 // Reading input from STDIN
+        
+        // Write your code here
+        int amt = Integer.valueOf(name);int count=12;
+        String[] button = new String[9];
+        while(count>0){
+        	count--;
+        	String line = s.nextLine();
+        	String[] line_arr = line.split(" ");
+        	int cnt = 3;
+        	while(cnt>0){
+        		cnt--;
+        		
+        		
+        	}
+        	
+        }
+    }
+
+}

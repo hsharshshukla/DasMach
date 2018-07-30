@@ -1,0 +1,38 @@
+package a_a;
+import java.util.*;
+public class chocoDistribution {
+    public static void main(String args[] ) throws Exception {
+
+        //Scanner
+        Scanner s = new Scanner(System.in);
+        int t = s.nextInt();
+        
+        while (t>0){
+        	t--;
+        	int q = s.nextInt();
+        	int k = s.nextInt();
+        	List <Integer> list = new ArrayList<>();
+        	while (q>0){
+        		q--;
+        		int st = s.nextInt();
+        		int[] stc = new int[st];
+        		while (st>0){
+        			st--;
+        			list.add(s.nextInt());
+        			
+        		}
+        		
+        		
+        		
+        	}
+        	Collections.sort(list);
+        	 int j=0;
+        	 while (k>0){
+        		 
+        	 }
+        }
+       
+
+        
+    }
+}
