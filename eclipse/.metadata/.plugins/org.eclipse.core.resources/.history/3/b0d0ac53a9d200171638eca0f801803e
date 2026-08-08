@@ -1,7 +1,0 @@
-package codechef;
-import java.util.Scanner;
-public class mirror {
-	Scanner in = new Scanner(System.in);
-	System.out.prinln(in.nextInt());
-
-}

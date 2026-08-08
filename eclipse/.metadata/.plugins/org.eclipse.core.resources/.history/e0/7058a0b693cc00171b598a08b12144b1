@@ -1,8 +1,0 @@
-class Node{
-	int key;
-	Node left,right;
-	public Node(){
-	key = item;
-	left = right = null;
-	}
-}

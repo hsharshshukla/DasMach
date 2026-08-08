@@ -1,8 +1,0 @@
-//mathclient
-import java.rmi.*;
-import java.rmi.registry.*;
-import java.awt.*;
-import java.awt.event.*;
-public class mathClient extends Frame implements ActionListener{
-	
-}
